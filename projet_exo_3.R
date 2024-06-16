@@ -107,9 +107,9 @@ create_plots_newton <- function(n, a, b, c, d) {
   cat(sprintf("P(x) = %.4f", newton_coef[n]))
   for (i in (n-1):1) {
     if (newton_coef[i] >= 0) {
-      cat(sprintf(" + %.4f*(x - %.4f)", abs(newton_coef[i]), x_points[i]))
+      cat(sprintf(" + %.4f*(x^%.4f)", abs(newton_coef[i]), i))
     } else {
-      cat(sprintf(" - %.4f*(x - %.4f)", abs(newton_coef[i]), x_points[i]))
+      cat(sprintf(" - %.4f*(x^%.4f)", abs(newton_coef[i]), i))
     }
   }
   cat("\n")
@@ -210,9 +210,9 @@ newton_10 <- function(x_points_defined_10, y_points_defined_10, n=10){
   cat(sprintf("P(x) = %.4f", newton_coef[n]))
   for (i in (n-1):1) {
     if (newton_coef[i] >= 0) {
-      cat(sprintf(" + %.4f*(x - %.4f)", abs(newton_coef[i]), x_points_defined_10[i]))
+      cat(sprintf(" + %.4f*(x^%.4f)", abs(newton_coef[i]), i))
     } else {
-      cat(sprintf(" - %.4f*(x - %.4f)", abs(newton_coef[i]), x_points_defined_10[i]))
+      cat(sprintf(" - %.4f*(x^%.4f)", abs(newton_coef[i]), i))
     }
   }
   cat("\n")
@@ -289,9 +289,9 @@ newton_15 <- function(x_points_defined_15, y_points_defined_15, n=15){
   cat(sprintf("P(x) = %.4f", newton_coef[n]))
   for (i in (n-1):1) {
     if (newton_coef[i] >= 0) {
-      cat(sprintf(" + %.4f*(x - %.4f)", abs(newton_coef[i]), x_points_defined_15[i]))
+      cat(sprintf(" + %.4f*(x^%.4f)", abs(newton_coef[i]), i))
     } else {
-      cat(sprintf(" - %.4f*(x - %.4f)", abs(newton_coef[i]), x_points_defined_15[i]))
+      cat(sprintf(" - %.4f*(x^%.4f)", abs(newton_coef[i]), i))
     }
   }
   cat("\n")
@@ -368,9 +368,9 @@ newton_20 <- function(x_points_defined_20, y_points_defined_20, n=20){
   cat(sprintf("P(x) = %.4f", newton_coef[n]))
   for (i in (n-1):1) {
     if (newton_coef[i] >= 0) {
-      cat(sprintf(" + %.4f*(x - %.4f)", abs(newton_coef[i]), x_points_defined_20[i]))
+      cat(sprintf(" + %.4f*(x^%.4f)", abs(newton_coef[i]), i))
     } else {
-      cat(sprintf(" - %.4f*(x - %.4f)", abs(newton_coef[i]), x_points_defined_20[i]))
+      cat(sprintf(" - %.4f*(x^%.4f)", abs(newton_coef[i]), i))
     }
   }
   cat("\n")
