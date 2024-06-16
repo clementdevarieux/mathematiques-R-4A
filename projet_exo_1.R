@@ -12,19 +12,20 @@ print(multiplicite_vp)
 # 2)
 matrice_random <- function(p) {
   mat = matrix(sample(1:10, p*p, replace = TRUE), p)
+  print(mat)
   print('les valeurs propres sont : (multiplicité en dessous)')
   print(table(eigen(mat)$values))
   return(mat)
 }
 
 B = matrice_random(4)
-
 # 3)
 P = eigen(A)$vector
 print(P)
 
 # 4)
 D = diag(valeur_propre)
+print(D)
 P_inv = solve(P)
 print(P_inv)
 

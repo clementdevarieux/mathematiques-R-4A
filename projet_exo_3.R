@@ -19,6 +19,8 @@ create_delta <- function(n, a, b, c, d) {
     return(x_y_list)
   }
 
+create_delta(10, -10, 10, -5, 5)
+
 # 2 - Fonction permettant de tracer une courbe passant par un nuage de points en utilisant la matrice de vandermonde
 create_plots_vandermonde <- function(n, a, b, c, d) {
 
@@ -40,12 +42,23 @@ create_plots_vandermonde <- function(n, a, b, c, d) {
   y_poly = sapply(x_poly, polynomial)
   
   lines(x_poly, y_poly, col = "blue")
+  
+  cat("\nPolynôme de Vandermonde :\n")
+  cat(sprintf("P(x) = %.4f", system_solve[n]))
+  for (i in (n-1):1) {
+    if (system_solve[i] >= 0) {
+      cat(sprintf(" + %.4f*x^%d", abs(system_solve[i]), i))
+    } else {
+      cat(sprintf(" - %.4f*x^%d", abs(system_solve[i]), i))
+    }
+  }
+  cat("\n")
 
 }
 
-# create_plots_vandermonde(9, 0,28,0,25)
-# create_plots_vandermonde(19, 0,38,0,35)
-# create_plots_vandermonde(29, 0,58,0,55)
+create_plots_vandermonde(9, -20,20,-10,10)
+create_plots_vandermonde(19, -20,20,-10,10)
+create_plots_vandermonde(29, -20,20,-10,10)
 # jouer avec la valeur de n, plus n est grand, plus c'est dur de trouver une solution
 
 # 3/4 - Fonction permettant de tracer une courbe passant par tous les points du nuage delta grâce à la matrice de Newton et ses différences divisées
@@ -89,11 +102,22 @@ create_plots_newton <- function(n, a, b, c, d) {
   
   lines(x_poly, y_poly, col = "blue")
   
+  cat("\nPolynôme d'interpolation de Newton :\n")
+  n <- length(newton_coef)
+  cat(sprintf("P(x) = %.4f", newton_coef[n]))
+  for (i in (n-1):1) {
+    if (newton_coef[i] >= 0) {
+      cat(sprintf(" + %.4f*(x - %.4f)", abs(newton_coef[i]), x_points[i]))
+    } else {
+      cat(sprintf(" - %.4f*(x - %.4f)", abs(newton_coef[i]), x_points[i]))
+    }
+  }
+  cat("\n")
 }
 
-# create_plots_newton(9, 0,28,0,25)
-# create_plots_newton(19, 0,38,0,45)
-# create_plots_newton(29, 0,58,0,57)
+create_plots_newton(9, 0,28,0,25)
+create_plots_newton(19, 0,38,0,45)
+create_plots_newton(29, 0,58,0,57)
 # fonctionne tout le temps, car on a f(x_i) = y_i pour chaque points d'apres l'interpolation de newton
 # mais par contre la forme de la courbe est absurde, passe par tous les points mais ne permet pas de prévoir une tendance
 
@@ -133,6 +157,17 @@ vandermonde_10 <- function(x_points_defined_10, y_points_defined_10, n=10){
   y_poly = sapply(x_poly, polynomial)
   
   lines(x_poly, y_poly, col = "blue")
+  
+  cat("\nPolynôme de Vandermonde :\n")
+  cat(sprintf("P(x) = %.4f", system_solve[n]))
+  for (i in (n-1):1) {
+    if (system_solve[i] >= 0) {
+      cat(sprintf(" + %.4f*x^%d", abs(system_solve[i]), i))
+    } else {
+      cat(sprintf(" - %.4f*x^%d", abs(system_solve[i]), i))
+    }
+  }
+  cat("\n")
 }
 newton_10 <- function(x_points_defined_10, y_points_defined_10, n=10){
   points(x=x_points_defined_10, y=y_points_defined_10, pch=16, col="coral2")
@@ -169,6 +204,19 @@ newton_10 <- function(x_points_defined_10, y_points_defined_10, n=10){
   y_poly = sapply(x_poly, function(x) newton_polynomial(x, x_points_defined_10, newton_coef))
   
   lines(x_poly, y_poly, col = "blue")
+  
+  cat("\nPolynôme d'interpolation de Newton :\n")
+  n <- length(newton_coef)
+  cat(sprintf("P(x) = %.4f", newton_coef[n]))
+  for (i in (n-1):1) {
+    if (newton_coef[i] >= 0) {
+      cat(sprintf(" + %.4f*(x - %.4f)", abs(newton_coef[i]), x_points_defined_10[i]))
+    } else {
+      cat(sprintf(" - %.4f*(x - %.4f)", abs(newton_coef[i]), x_points_defined_10[i]))
+    }
+  }
+  cat("\n")
+  
 }
 
 vandermonde_15 <- function(x_points_defined_15, y_points_defined_15, n=15){
@@ -187,6 +235,17 @@ vandermonde_15 <- function(x_points_defined_15, y_points_defined_15, n=15){
   y_poly = sapply(x_poly, polynomial)
   
   lines(x_poly, y_poly, col = "blue")
+  
+  cat("\nPolynôme de Vandermonde :\n")
+  cat(sprintf("P(x) = %.4f", system_solve[n]))
+  for (i in (n-1):1) {
+    if (system_solve[i] >= 0) {
+      cat(sprintf(" + %.4f*x^%d", abs(system_solve[i]), i))
+    } else {
+      cat(sprintf(" - %.4f*x^%d", abs(system_solve[i]), i))
+    }
+  }
+  cat("\n")
   
 }
 newton_15 <- function(x_points_defined_15, y_points_defined_15, n=15){
@@ -224,6 +283,19 @@ newton_15 <- function(x_points_defined_15, y_points_defined_15, n=15){
   y_poly = sapply(x_poly, function(x) newton_polynomial(x, x_points_defined_15, newton_coef))
   
   lines(x_poly, y_poly, col = "blue")
+  
+  cat("\nPolynôme d'interpolation de Newton :\n")
+  n <- length(newton_coef)
+  cat(sprintf("P(x) = %.4f", newton_coef[n]))
+  for (i in (n-1):1) {
+    if (newton_coef[i] >= 0) {
+      cat(sprintf(" + %.4f*(x - %.4f)", abs(newton_coef[i]), x_points_defined_15[i]))
+    } else {
+      cat(sprintf(" - %.4f*(x - %.4f)", abs(newton_coef[i]), x_points_defined_15[i]))
+    }
+  }
+  cat("\n")
+  
 }
 
 vandermonde_20 <- function(x_points_defined_20, y_points_defined_20, n=20){
@@ -242,6 +314,17 @@ vandermonde_20 <- function(x_points_defined_20, y_points_defined_20, n=20){
   y_poly = sapply(x_poly, polynomial)
   
   lines(x_poly, y_poly, col = "blue")
+  
+  cat("\nPolynôme de Vandermonde :\n")
+  cat(sprintf("P(x) = %.4f", system_solve[n]))
+  for (i in (n-1):1) {
+    if (system_solve[i] >= 0) {
+      cat(sprintf(" + %.4f*x^%d", abs(system_solve[i]), i))
+    } else {
+      cat(sprintf(" - %.4f*x^%d", abs(system_solve[i]), i))
+    }
+  }
+  cat("\n")
   
 }
 newton_20 <- function(x_points_defined_20, y_points_defined_20, n=20){
@@ -279,13 +362,36 @@ newton_20 <- function(x_points_defined_20, y_points_defined_20, n=20){
   y_poly = sapply(x_poly, function(x) newton_polynomial(x, x_points_defined_20, newton_coef))
   
   lines(x_poly, y_poly, col = "blue")
+  
+  cat("\nPolynôme d'interpolation de Newton :\n")
+  n <- length(newton_coef)
+  cat(sprintf("P(x) = %.4f", newton_coef[n]))
+  for (i in (n-1):1) {
+    if (newton_coef[i] >= 0) {
+      cat(sprintf(" + %.4f*(x - %.4f)", abs(newton_coef[i]), x_points_defined_20[i]))
+    } else {
+      cat(sprintf(" - %.4f*(x - %.4f)", abs(newton_coef[i]), x_points_defined_20[i]))
+    }
+  }
+  cat("\n")
+  
 }
 
-#vandermonde_10(x_points_defined_10,y_points_defined_10)
-#newton_10(x_points_defined_10,y_points_defined_10)
+vandermonde_10(x_points_defined_10,y_points_defined_10)
+newton_10(x_points_defined_10,y_points_defined_10)
 
-#vandermonde_15(x_points_defined_15,y_points_defined_15)
-#newton_15(x_points_defined_15,y_points_defined_15)
+vandermonde_15(x_points_defined_15,y_points_defined_15)
+newton_15(x_points_defined_15,y_points_defined_15)
 
-#vandermonde_20(x_points_defined_20,y_points_defined_20)
+vandermonde_20(x_points_defined_20,y_points_defined_20)
 newton_20(x_points_defined_20,y_points_defined_20)
+
+
+plot(x = 1,
+     type = "n",
+     xlim = c(0, 19),
+     ylim = c(0, 420),
+     pch = 16,
+     xlab = "x values",
+     ylab = "y values"
+)
