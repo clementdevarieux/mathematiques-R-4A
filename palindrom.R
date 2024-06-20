@@ -3,8 +3,15 @@
 library(stringi)
 
 # Étape 1 : Fonction pour identifier les palindromes
+
+# Fonction pour normaliser les caractères accentués
+normalize_accents <- function(text) {
+  stri_trans_general(text, "Latin-ASCII")
+}
+
+# Fonction pour identifier les palindromes
 is_palindrome <- function(mot) {
-  mot_clean <- gsub(" ", "", tolower(mot))
+  mot_clean <- gsub(" ", "", tolower(normalize_accents(mot)))
   if (mot_clean == stri_reverse(mot_clean)) {
     return(paste(mot, "est un palindrome"))
   } else {
