@@ -1,29 +1,204 @@
+# EXERCICE 1
+# 1)
+A = matrix(c(0, 1/2, 1/2, -2/3, 1, 2/3, -1/3, 1/2, 5/6), ncol=3, byrow = T )
+
+valeur_propre = eigen(A)$values
+multiplicite_vp = table(valeur_propre)
+print(valeur_propre)
+print(multiplicite_vp)
+
+# on a 3 valeurs propres distintes de multiplicité 1 sur une matrice 3x3, donc A est diago
+
+# 2)
+matrice_random <- function(p) {
+  mat = matrix(sample(1:10, p*p, replace = TRUE), p)
+  print(mat)
+  print('les valeurs propres sont : (multiplicité en dessous)')
+  print(table(eigen(mat)$values))
+  return(mat)
+}
+
+B = matrice_random(4)
+# 3)
+P = eigen(A)$vector
+print(P)
+
+# 4)
+D = diag(valeur_propre)
+print(D)
+P_inv = solve(P)
+print(P_inv)
+
+calcul_verif_A = P%*%D%*%P_inv
+
+print(calcul_verif_A)
+print(A)
+
+all.equal(A, calcul_verif_A)
+
+# 5)
+
+solve_system<-function(n){
+  X0 = c(1, 2, 3)
+  D = diag(valeur_propre)
+  D_n = D^n
+  Xn = P %*% D_n %*% P_inv %*% X0
+  return(Xn)
+}
+
+print(solve_system(20000))
+
+
+# on constate que ça tend vers (4, 4, 4) quand n tend vers + l'infini
+
+# _____________________________________________________________________________________________________________
+
+
+## EXERCICE 2
+# 1-
+
+A = matrix(c(-6, -3, 6, 1, -1, 2, 1, -6, 3, 6, 3, -2, 6, -3, 6, -1, 2, -1, 2, 3, -3, 6, 3, 2, -2, -1, 2, -3, 1, 2, 1, 6), ncol=4, byrow = T)
+
+col1 <- A[, 1]
+col2 <- A[, 2]
+col3 <- A[, 3]
+col4 <- A[, 4]
+
+# Calculer le produit scalaire
+dot_product <- sum(col1 * col2)
+
+# Afficher le produit scalaire
+dot_product
+
+# Calculer le produit scalaire
+dot_product <- sum(col1 * col3)
+
+# Afficher le produit scalaire
+dot_product
+
+# Calculer le produit scalaire
+dot_product <- sum(col1 * col4)
+
+# Afficher le produit scalaire
+dot_product
+
+
+# 2- 
+
+norms <- sqrt(colSums(A^2))
+
+#Afficher les normes 
+norms
+
+
+# on remarque que la norme de chaque colonnes est égale à 10, on divise donc A par 10
+U = A/10
+
+print(U)
+
+# 3-
+UTU = t(U) %*% U
+print(UTU)
+# on remarque que la première matrice représente peut être la matrice identité
+
+UUT = U %*% t(U)
+print(UUT)
+# represente une matrice symétrique 
+
+# 4-
+
+y = c(1, 3, -5, 4, 6, 7, 9, 8)
+
+p = UUT %*% y
+
+print(p)
+
+z = y - p
+
+print(z)
+
+# p appartient à col de A par définition
+
+print(sum(z * p))
+
+# le produit scalaire de z . p est égale à 0, donc z est orthogonal à p
+
+# 5 -
+
+colU1 <- U[, 1]
+colU2 <- U[, 2]
+colU3 <- U[, 3]
+colU4 <- U[, 4]
+
+# Calculer le produit scalaire
+dot_product <- sum(z * colU1)
+
+# Afficher le produit scalaire
+dot_product
+
+# Calculer le produit scalaire
+dot_product <- sum(z * colU2)
+
+# Afficher le produit scalaire
+dot_product
+
+# Calculer le produit scalaire
+dot_product <- sum(z * colU3)
+
+# Afficher le produit scalaire
+dot_product
+
+# Calculer le produit scalaire
+dot_product <- sum(z * colU4)
+
+# Afficher le produit scalaire
+dot_product
+
+# 6 - Z est orthogonal à p or p appartient à col(A) donc z appartient orthogonal(Col(A))
+
+# 7 - 
+
+y = c(1, 1, 1, 1, 1, 1, 1, 1)
+
+p = UUT %*% y
+
+print(p)
+
+# 8 - 
+
+b <- c(1, 1, 1, 1, -1, -1, -1, -1)
+projection_b <- UUT %*% b
+distance <- sqrt(sum((b - projection_b)^2))
+distance
+
+# _______________________________________________________________________________________________________________
+
 # 1 - fonction permettant de créer un nuage de points Delta
 create_delta <- function(n, a, b, c, d) {
-    x_points = sort(sample(a:b, n, replace=F), decreasing=F)
-    y_points = sample(c:d, n, replace=T)
-    
-    plot(x = 1,
-         type = "n",
-         xlim = c(a, b),
-         ylim = c(c, d),
-         pch = 16,
-         xlab = "x values",
-         ylab = "y values"
-    )
-    
-    points(x=x_points, y=y_points, pch=16, col="coral2")
-    
-    x_y_list = list(x_points = x_points, y_points = y_points)
-    
-    return(x_y_list)
-  }
+  x_points = sort(sample(a:b, n, replace=F), decreasing=F)
+  y_points = sample(c:d, n, replace=T)
+  
+  plot(x = 1,
+       type = "n",
+       xlim = c(a, b),
+       ylim = c(c, d),
+       pch = 16,
+       xlab = "x values",
+       ylab = "y values"
+  )
+  
+  points(x=x_points, y=y_points, pch=16, col="coral2")
+  
+  x_y_list = list(x_points = x_points, y_points = y_points)
+  
+  return(x_y_list)
+}
 
 create_delta(10, -10, 10, -5, 5)
 
 # 2 - Fonction permettant de tracer une courbe passant par un nuage de points en utilisant la matrice de vandermonde
 create_plots_vandermonde <- function(n, a, b, c, d) {
-
+  
   xy_points = create_delta(n, a, b, c, d)
   x_points = xy_points$x_points
   y_points = xy_points$y_points
@@ -53,7 +228,7 @@ create_plots_vandermonde <- function(n, a, b, c, d) {
     }
   }
   cat("\n")
-
+  
 }
 
 create_plots_vandermonde(9, -20,20,-10,10)
@@ -398,3 +573,160 @@ plot(x = 1,
      xlab = "x values",
      ylab = "y values"
 )
+
+# _____________________________________________________________________________________________________
+# Exercice 4
+
+library(stringi)
+
+# Étape 1 : Fonction pour identifier les palindromes
+is_palindrome <- function(mot) {
+  mot_clean <- gsub(" ", "", tolower(mot))
+  if (mot_clean == stri_reverse(mot_clean)) {
+    return(paste(mot, "est un palindrome"))
+  } else {
+    return(paste(mot, "n'est pas un palindrome"))
+  }
+}
+
+# Étape 2 : Appliquer la fonction sur une liste de mots et de phrases
+mots <- c("radar", "bonne année", "sept", "kayak", "la mariée ira mal",
+          "statistiques", "engage le jeu que je le gagne", "esope reste ici et se repose")
+resultats <- sapply(mots, is_palindrome)
+print(resultats)
+
+# Étape 3 : Créer un dictionnaire de 8000 mots aléatoires
+generate_random_word <- function(length) {
+  paste(sample(letters, length, replace = TRUE), collapse = "")
+}
+
+dictionnaire <- c()
+for (n in 2:9) {
+  dictionnaire <- c(dictionnaire, replicate(1000, generate_random_word(n)))
+}
+
+# Étape 4 : Retourner tous les mots palindromiques du dictionnaire
+palindromes <- dictionnaire[sapply(dictionnaire, function(mot) {
+  mot == stri_reverse(mot)
+})]
+
+print(palindromes)
+
+# __________________________________________________________________________________________________
+
+# Assurez-vous de spécifier le chemin correct et le délimiteur approprié pour votre fichier .dat
+#donnees <- read.table("/Users/Alanboloorian_1/Downloads/Décathlon (données pour l'ACP).dat", header = TRUE, sep = ",")
+library(stats)
+library(factoextra)
+
+
+
+
+# QUESTION 1: Récupérer les données du fichier "decathlon" et donner la matrice corrélation des variables quantitatives (ne pas prendre COMPET)
+# On charge les données 
+
+donnees <- read.table("/Users/Alanboloorian_1/Downloads/Décathlon (données pour l'ACP).dat", header = TRUE, fill = TRUE, sep = " ")
+print(donnees)
+# Suppression de la colonne "COMPET" car elle est qualitative
+donnees_sans_compet <- donnees[, -13]
+print(donnees_sans_compet)
+# Calcul de la matrice de corrélation
+matrice_correlation <- cor(donnees_sans_compet)
+# Affiche la matrice de corrélation
+print(matrice_correlation)
+
+
+
+
+#QUESTION 2: Quelles sont les couples de variables les plus corrélées, les moins corréelées, les plus opposées ? Justifier.
+# Création d'une copie de la matrice de corrélation pour ne pas manipuler l'originale
+
+cor_matrix <- matrice_correlation
+# Mettre la diagonale à NA pour éviter de compter la corrélation des variables avec elles-mêmes
+diag(cor_matrix) <- NA
+# Le couple de variables le plus corrélé
+max_correlation_value <- max(cor_matrix, na.rm = TRUE)
+max_correlation_indices <- which(cor_matrix == max_correlation_value, arr.ind = TRUE)
+most_correlated <- names(donnees_sans_compet)[max_correlation_indices]
+# Le couple de variables le moins corrélé (corrélation absolue la plus basse)
+min_correlation_value <- min(abs(cor_matrix), na.rm = TRUE)
+min_correlation_indices <- which(abs(cor_matrix) == min_correlation_value, arr.ind = TRUE)
+least_correlated <- names(donnees_sans_compet)[min_correlation_indices]
+# Le couple de variables le plus opposé (corrélation la plus négative)
+min_negative_correlation_value <- min(cor_matrix, na.rm = TRUE)
+min_negative_correlation_indices <- which(cor_matrix == min_negative_correlation_value, arr.ind = TRUE)
+most_opposite <- names(donnees_sans_compet)[min_negative_correlation_indices]
+# Affichage des résultats avec les valeurs de corrélation
+cat("Les variables les plus corrélées sont :", most_correlated, "avec une corrélation de", max_correlation_value, "\n")
+cat("Les variables les moins corrélées (absolument) sont :", least_correlated, "avec une corrélation de", min_correlation_value, "\n")
+cat("Les variables les plus opposées sont :", most_opposite, "avec une corrélation de", min_negative_correlation_value, "\n")
+
+
+
+
+#QUESTION 4
+# Sélection des colonnes (exclusion de RANG, POINTS et COMPET)
+donnees_acp <- donnees[, 1:10]
+# Standardisation des données
+donnees_acp <- scale(donnees_acp)
+# Execution de l'ACP
+resultat_acp <- prcomp(donnees_acp, scale. = TRUE)
+# Calcul de la matrice de corrélation
+correlation_matrix <- cor(donnees_acp)
+# Extraction et tri des valeurs propres
+eigen_results <- eigen(correlation_matrix)
+sorted_eigen_values <- sort(eigen_results$values, decreasing = TRUE)
+# Affichage des valeurs propres triées
+print(sorted_eigen_values)
+# Application de la règle de Kaiser (on prend ceux qui sont supérieurs à 1)
+kaiser_rule <- sum(sorted_eigen_values > 1)
+cat("Nombre de composantes principales à retenir selon la règle de Kaiser :", kaiser_rule, "\n")
+# Calcul et affichage du pourcentage d'inertie expliquée
+total_variance_explained <- sum(sorted_eigen_values[1:3]) / sum(sorted_eigen_values) * 100
+cat("Pourcentage d'inertie expliquée par les trois premières composantes :", total_variance_explained, "%\n")
+
+
+
+
+#QUESTION 5: Déterminer les trois composantes principales (projection des individus sur les trois vecteurs propres), que l'on note C1,C2,C3 dans l'ordre décroisant d'inertie
+
+# Les scores des trois premières composantes principales
+scores <- data.frame(
+  C1 = resultat_acp$x[,1], 
+  C2 = resultat_acp$x[,2],
+  C3 = resultat_acp$x[,3]   
+)
+# Affichage des premiers scores
+head(scores)
+
+
+
+
+#QUESTION 6: Déterminer le tableau des corrélations des variables par rapport à C1,C2,C3 et donner les deux cercles de corrélation des variables par rapport à (C1,C2) et (C2,C3)
+
+# On récupère`resultat_acp` qui est notre résultat de prcomp
+loadings <- resultat_acp$rotation  # Les loadings (corrélation entre variables originales et composantes)
+# Extraire les loadings pour les trois premières composantes principales
+loadings_c1_c2_c3 <- loadings[, 1:3]
+# Affichage du tableau des loadings
+print(loadings_c1_c2_c3)
+# Cercle de corrélation pour C1 et C2
+fviz_pca_var(resultat_acp, axes = c(1, 2), 
+             col.var = "contrib", # Colorer les variables en fonction de leur contribution
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE)  # Pour éviter le chevauchement du texte
+title("Cercle de Corrélation (C1, C2)")
+# Cercle de corrélation pour C2 et C3
+fviz_pca_var(resultat_acp, axes = c(2, 3), 
+             col.var = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE)
+title("Cercle de Corrélation (C2, C3)")
+
+
+
+
+
+
+
+
